@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>7 критических ошибок при выборе парфюма</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Raleway:wght@300;400;500;600&display=swap');
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Raleway', sans-serif;
+            color: #2c2c2c;
+            background: #faf8f5;
+            line-height: 1.7;
+            font-weight: 400;
+        }
+
+        @page {
+            size: A4;
+            margin: 0;
+        }
+
+        .page {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 0;
+        }
+
+        /* ===== HERO ===== */
+        .hero {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+            color: #fff;
+            padding: 70px 50px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: radial-gradient(ellipse at 30% 50%, rgba(199, 164, 114, 0.15) 0%, transparent 60%),
+                        radial-gradient(ellipse at 70% 50%, rgba(199, 164, 114, 0.1) 0%, transparent 50%);
+            pointer-events: none;
+        }
+
+        .hero-bottles {
+            position: absolute;
+            top: 0;
+            height: 100%;
+            width: 160px;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        .hero-bottles-left {
+            left: 10px;
+        }
+
+        .hero-bottles-right {
+            right: 10px;
+        }
+
+        .bottles-divider {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 30px;
+            padding: 10px 40px 20px;
+            opacity: 0.2;
+        }
+
+        .bottles-divider svg {
+            flex-shrink: 0;
+        }
+
+        .hero-label {
+            font-family: 'Playfair Display', serif;
+            font-weight: 700;
+            font-size: 22px;
+            font-style: italic;
+            letter-spacing: 2px;
+            text-transform: none;
+            background: linear-gradient(135deg, #e8c97a, #c7a472, #f0d89a, #c7a472);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 24px;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 42px;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            position: relative;
+        }
+
+        .hero h1 span {
+            color: #c7a472;
+        }
+
+        .hero-sub {
+            font-size: 16px;
+            font-weight: 300;
+            color: rgba(255,255,255,0.75);
+            max-width: 560px;
+            margin: 0 auto;
+            position: relative;
+            line-height: 1.8;
+        }
+
+        .divider-gold {
+            width: 60px;
+            height: 2px;
+            background: #c7a472;
+            margin: 25px auto;
+        }
+
+        /* ===== INTRO ===== */
+        .intro {
+            padding: 45px 50px 30px;
+            text-align: center;
+        }
+
+        .intro p {
+            font-size: 15px;
+            color: #555;
+            max-width: 620px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* ===== CARDS ===== */
+        .cards {
+            padding: 10px 40px 40px;
+        }
+
+        .card {
+            background: #fff;
+            border-radius: 16px;
+            padding: 35px 40px;
+            margin-bottom: 24px;
+            box-shadow: 0 2px 20px rgba(0,0,0,0.04);
+            border: 1px solid rgba(0,0,0,0.04);
+            position: relative;
+            overflow: hidden;
+            page-break-inside: avoid;
+        }
+
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 5px;
+            height: 100%;
+        }
+
+        .card:nth-child(1)::before { background: linear-gradient(180deg, #c7a472, #d4b896); }
+        .card:nth-child(2)::before { background: linear-gradient(180deg, #8b7355, #a68b6b); }
+        .card:nth-child(3)::before { background: linear-gradient(180deg, #c7a472, #d4b896); }
+        .card:nth-child(4)::before { background: linear-gradient(180deg, #8b7355, #a68b6b); }
+        .card:nth-child(5)::before { background: linear-gradient(180deg, #c7a472, #d4b896); }
+        .card:nth-child(6)::before { background: linear-gradient(180deg, #8b7355, #a68b6b); }
+        .card:nth-child(7)::before { background: linear-gradient(180deg, #c7a472, #d4b896); }
+
+        .card-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 48px;
+            font-weight: 700;
+            color: rgba(199, 164, 114, 0.15);
+            position: absolute;
+            top: 12px;
+            right: 30px;
+            line-height: 1;
+        }
+
+        .card h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 20px;
+            font-weight: 700;
+            color: #1a1a2e;
+            margin-bottom: 14px;
+            padding-right: 40px;
+        }
+
+        .card p {
+            font-size: 14.5px;
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 16px;
+        }
+
+        .tip {
+            background: linear-gradient(135deg, #f9f6f1, #faf8f5);
+            border-radius: 10px;
+            padding: 16px 20px;
+            border-left: 3px solid #c7a472;
+        }
+
+        .tip-label {
+            font-size: 11px;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #c7a472;
+            margin-bottom: 6px;
+        }
+
+        .tip p {
+            font-size: 14px;
+            color: #3a3a3a;
+            margin-bottom: 0;
+            font-weight: 500;
+            line-height: 1.7;
+        }
+
+        /* ===== FOOTER ===== */
+        .footer {
+            background: linear-gradient(135deg, #1a1a2e 0%, #16213e 40%, #0f3460 100%);
+            color: #fff;
+            padding: 50px;
+            text-align: center;
+            position: relative;
+        }
+
+        .footer-icon {
+            font-size: 36px;
+            margin-bottom: 16px;
+        }
+
+        .footer h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 22px;
+            font-weight: 700;
+            margin-bottom: 16px;
+        }
+
+        .footer p {
+            font-size: 15px;
+            font-weight: 300;
+            color: rgba(255,255,255,0.7);
+            max-width: 520px;
+            margin: 0 auto 20px;
+            line-height: 1.8;
+        }
+
+        .footer-cta {
+            display: inline-block;
+            padding: 14px 40px;
+            background: #c7a472;
+            color: #1a1a2e;
+            font-family: 'Raleway', sans-serif;
+            font-weight: 600;
+            font-size: 14px;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            text-decoration: none;
+            border-radius: 50px;
+            transition: background 0.3s;
+        }
+
+        .footer-cta:hover {
+            background: #d4b896;
+        }
+
+        /* ===== PRINT ===== */
+        @media print {
+            body {
+                background: #fff;
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+
+            .page {
+                max-width: 100%;
+            }
+
+            .card {
+                box-shadow: none;
+                border: 1px solid #e8e4df;
+                break-inside: avoid;
+            }
+
+            .hero-bottles {
+                opacity: 0.5;
+            }
+
+            .hero, .footer {
+                -webkit-print-color-adjust: exact;
+                print-color-adjust: exact;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<div class="page">
+
+    <!-- HERO -->
+    <div class="hero">
+        <!-- Декоративные флаконы слева -->
+        <svg class="hero-bottles hero-bottles-left" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg">
+            <!-- Высокий узкий флакон -->
+            <g opacity="0.12" fill="#c7a472">
+                <rect x="28" y="8" width="14" height="6" rx="2"/>
+                <rect x="32" y="0" width="6" height="10" rx="1"/>
+                <rect x="22" y="14" width="26" height="70" rx="6"/>
+            </g>
+            <!-- Круглый флакон -->
+            <g opacity="0.08" fill="#c7a472" transform="translate(60, 120)">
+                <rect x="22" y="0" width="6" height="8" rx="1"/>
+                <rect x="16" y="6" width="18" height="5" rx="2"/>
+                <ellipse cx="25" cy="45" rx="25" ry="30"/>
+            </g>
+            <!-- Квадратный флакон -->
+            <g opacity="0.1" fill="#c7a472" transform="translate(10, 230)">
+                <rect x="20" y="0" width="8" height="10" rx="1"/>
+                <rect x="15" y="8" width="18" height="5" rx="2"/>
+                <rect x="5" y="13" width="38" height="50" rx="4"/>
+            </g>
+        </svg>
+
+        <!-- Декоративные флаконы справа -->
+        <svg class="hero-bottles hero-bottles-right" viewBox="0 0 200 400" xmlns="http://www.w3.org/2000/svg">
+            <!-- Грушевидный флакон -->
+            <g opacity="0.1" fill="#c7a472" transform="translate(120, 20)">
+                <rect x="18" y="0" width="6" height="10" rx="1"/>
+                <rect x="14" y="8" width="14" height="5" rx="2"/>
+                <path d="M8,50 Q8,13 21,13 Q34,13 34,50 Q34,75 21,75 Q8,75 8,50Z"/>
+            </g>
+            <!-- Цилиндрический флакон -->
+            <g opacity="0.07" fill="#c7a472" transform="translate(140, 140)">
+                <rect x="12" y="0" width="6" height="12" rx="1"/>
+                <ellipse cx="15" cy="12" rx="12" ry="4"/>
+                <rect x="3" y="12" width="24" height="60" rx="3"/>
+                <ellipse cx="15" cy="72" rx="12" ry="4"/>
+            </g>
+            <!-- Трапециевидный флакон -->
+            <g opacity="0.12" fill="#c7a472" transform="translate(110, 280)">
+                <rect x="20" y="0" width="8" height="8" rx="1"/>
+                <rect x="15" y="6" width="18" height="5" rx="2"/>
+                <path d="M10,11 L38,11 L44,65 Q44,70 39,70 L9,70 Q4,70 4,65Z"/>
+            </g>
+        </svg>
+
+        <div class="hero-label">Юлия Самарина</div>
+        <div style="font-family: 'Raleway', sans-serif; font-weight: 400; font-size: 14px; letter-spacing: 3px; text-transform: uppercase; color: rgba(199,164,114,0.7); margin-bottom: 28px; position: relative;">парфюмерный стилист</div>
+        <h1><span>7</span> критических ошибок<br>при выборе парфюма</h1>
+        <div class="divider-gold"></div>
+        <p class="hero-sub">Парфюмерия — это не просто приятный запах, а сложная химия, завязанная на физиологии и контексте. Часто «тот самый» аромат из флакона превращается в разочарование спустя два часа после покупки.</p>
+    </div>
+
+    <!-- INTRO -->
+    <div class="intro">
+        <p>Вот 7 критических ошибок, которые мешают найти идеальный парфюм и зря расходуют ваш бюджет.</p>
+    </div>
+
+    <!-- BOTTLES DIVIDER -->
+    <div class="bottles-divider">
+        <!-- Флакон 1: классический прямоугольный -->
+        <svg width="40" height="65" viewBox="0 0 40 65" xmlns="http://www.w3.org/2000/svg">
+            <g fill="#c7a472">
+                <rect x="16" y="0" width="8" height="8" rx="1"/>
+                <rect x="12" y="7" width="16" height="4" rx="2"/>
+                <rect x="4" y="11" width="32" height="52" rx="5"/>
+            </g>
+        </svg>
+        <!-- Флакон 2: круглый -->
+        <svg width="50" height="65" viewBox="0 0 50 65" xmlns="http://www.w3.org/2000/svg">
+            <g fill="#8b7355">
+                <rect x="21" y="0" width="8" height="10" rx="1"/>
+                <rect x="17" y="8" width="16" height="4" rx="2"/>
+                <ellipse cx="25" cy="40" rx="24" ry="24"/>
+            </g>
+        </svg>
+        <!-- Флакон 3: высокий узкий -->
+        <svg width="28" height="70" viewBox="0 0 28 70" xmlns="http://www.w3.org/2000/svg">
+            <g fill="#c7a472">
+                <rect x="10" y="0" width="8" height="6" rx="1"/>
+                <rect x="8" y="5" width="12" height="3" rx="1"/>
+                <rect x="4" y="8" width="20" height="60" rx="4"/>
+            </g>
+        </svg>
+        <!-- Флакон 4: грушевидный -->
+        <svg width="42" height="68" viewBox="0 0 42 68" xmlns="http://www.w3.org/2000/svg">
+            <g fill="#8b7355">
+                <rect x="17" y="0" width="8" height="10" rx="1"/>
+                <rect x="14" y="8" width="14" height="4" rx="2"/>
+                <path d="M6,45 Q6,12 21,12 Q36,12 36,45 Q36,66 21,66 Q6,66 6,45Z"/>
+            </g>
+        </svg>
+        <!-- Флакон 5: трапеция -->
+        <svg width="44" height="65" viewBox="0 0 44 65" xmlns="http://www.w3.org/2000/svg">
+            <g fill="#c7a472">
+                <rect x="18" y="0" width="8" height="8" rx="1"/>
+                <rect x="14" y="6" width="16" height="4" rx="2"/>
+                <path d="M10,10 L34,10 L40,58 Q40,63 35,63 L9,63 Q4,63 4,58Z"/>
+            </g>
+        </svg>
+        <!-- Флакон 6: ромбовидный -->
+        <svg width="46" height="68" viewBox="0 0 46 68" xmlns="http://www.w3.org/2000/svg">
+            <g fill="#8b7355">
+                <rect x="19" y="0" width="8" height="10" rx="1"/>
+                <rect x="16" y="8" width="14" height="4" rx="2"/>
+                <path d="M23,14 L44,40 L23,66 L2,40Z" rx="3"/>
+            </g>
+        </svg>
+    </div>
+
+    <!-- CARDS -->
+    <div class="cards">
+
+        <!-- 1 -->
+        <div class="card">
+            <div class="card-number">01</div>
+            <h2>Покупка сразу после теста на блоттере</h2>
+            <p>Бумага не обладает теплотой, кислотностью и индивидуальным запахом кожи. Блоттер отлично передает верхние ноты (первые 10–15 минут), но он «немой» в отношении того, как аромат раскроется в базе через 3-4 часа.</p>
+            <div class="tip">
+                <div class="tip-label">Как правильно</div>
+                <p>Понравился запах на бумаге? Нанесите на запястье и поживите с ним день.</p>
+            </div>
+        </div>
+
+        <!-- 2 -->
+        <div class="card">
+            <div class="card-number">02</div>
+            <h2>Марафон из десятка ароматов за раз</h2>
+            <p>После 3–4 композиций обонятельные рецепторы «замыливаются». Мозг перестает различать тонкие нюансы (например, разницу между пудровым ирисом и сливочным гелиотропом) и начинает воспринимать всё как однородный сладкий или свежий фон.</p>
+            <div class="tip">
+                <div class="tip-label">Как правильно</div>
+                <p>За один визит в магазин тестируйте не более 3 ароматов на коже.</p>
+            </div>
+        </div>
+
+        <!-- 3 -->
+        <div class="card">
+            <div class="card-number">03</div>
+            <h2>«Слепая» покупка по восторженным отзывам</h2>
+            <p>Парфюмерная критика — вещь субъективная. То, что для одного «роскошный восток и специи», для другого — «тяжелая лавка благовоний». На восприятие влияют климат, влажность и даже ваш личный ольфакторный опыт.</p>
+            <div class="tip">
+                <div class="tip-label">Как правильно</div>
+                <p>Отзывы полезны, чтобы сузить круг поиска, но финальное решение — только через личный затест.</p>
+            </div>
+        </div>
+
+        <!-- 4 -->
+        <div class="card">
+            <div class="card-number">04</div>
+            <h2>Тест в неподходящем состоянии</h2>
+            <p>Кофе, острая еда со специями, лук или чеснок меняют ваше восприятие запахов на несколько часов. Усталость и стресс также искажают работу рецепторов: мозг может интерпретировать сложную нишу как раздражающий шум.</p>
+            <div class="tip">
+                <div class="tip-label">Как правильно</div>
+                <p>Выбирайте парфюм в первой половине дня, будучи отдохнувшим и «ольфакторно чистым».</p>
+            </div>
+        </div>
+
+        <!-- 5 -->
+        <div class="card">
+            <div class="card-number">05</div>
+            <h2>Синдром «Хочу как на ней»</h2>
+            <p>Химия кожи — это реальность. Один и тот же аромат с нотами амброксана или акигалавуда может звучать на одном человеке звонко и минерально, а на другом — уйти в излишнюю животную резкость.</p>
+            <div class="tip">
+                <div class="tip-label">Как правильно</div>
+                <p>Ищите не «чужой шлейф», а то, что комплементарно именно вашей коже.</p>
+            </div>
+        </div>
+
+        <!-- 6 -->
+        <div class="card">
+            <div class="card-number">06</div>
+            <h2>Игнорирование концентрации и сезонности</h2>
+            <p>Купить плотный экстракт для офиса в +30 °C — верный способ возненавидеть его через неделю. Многие разочаровываются в аромате просто потому, что используют его не в то время и не в том месте.</p>
+            <div class="tip">
+                <div class="tip-label">Как правильно</div>
+                <p>Учитывайте уместность. То, что великолепно звучит на вечернем приеме, может «душить» в закрытом помещении днем.</p>
+            </div>
+        </div>
+
+        <!-- 7 -->
+        <div class="card">
+            <div class="card-number">07</div>
+            <h2>Спешка с выводами (отказ от пробников)</h2>
+            <p>Маркетинг и красивый флакон часто подталкивают к импульсивной покупке. Но парфюм — это сценарий, который разворачивается во времени. Если вам не нравится база (ноты, которые остаются в конце дня), вы не сможете носить этот аромат долго.</p>
+            <div class="tip">
+                <div class="tip-label">Как правильно</div>
+                <p>Начните с отливанта или пробника 1.5–2 мл. Разносите его в разных погодных условиях.</p>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- FOOTER -->
+    <div class="footer">
+        <div class="footer-icon">✦</div>
+        <h3>Важно</h3>
+        <p>Парфюмерный гардероб — это инвестиция в ваше самоощущение. Чтобы не коллекционировать «красивые, но бесполезные» флаконы, стоит доверить подбор профессионалу, который разберет ваши предпочтения на молекулы.</p>
+        <p style="color: rgba(255,255,255,0.9); font-weight: 400;">Хотите найти аромат, который станет вашей второй кожей?</p>
+        <a href="sms:+79198308956?body=Здравствуйте!%20Хочу%20подобрать%20аромат" class="footer-cta">Написать мне</a>
+        <p style="margin-top: 30px; font-size: 13px; color: rgba(255,255,255,0.45); letter-spacing: 1px;">Гайд от парфюмерного стилиста Юлии Самариной</p>
+    </div>
+
+</div>
+
+</body>
+</html>
