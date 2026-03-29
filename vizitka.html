@@ -1,0 +1,514 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Создать визитку</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg: #0b0f1a;
+            --surface: rgba(255,255,255,0.04);
+            --border: rgba(255,255,255,0.08);
+            --text: #e8ecf4;
+            --muted: rgba(232,236,244,0.4);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Manrope', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(90px);
+            z-index: 0;
+        }
+        .orb-1 {
+            width: 600px; height: 600px;
+            top: -200px; left: -200px;
+            background: radial-gradient(circle, rgba(0,185,155,0.16) 0%, transparent 65%);
+        }
+        .orb-2 {
+            width: 450px; height: 450px;
+            bottom: -100px; right: -50px;
+            background: radial-gradient(circle, rgba(110,40,210,0.14) 0%, transparent 65%);
+        }
+        .orb-3 {
+            width: 300px; height: 300px;
+            top: 40%; right: 10%;
+            background: radial-gradient(circle, rgba(30,100,255,0.09) 0%, transparent 65%);
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 520px;
+            margin: 0 auto;
+            padding: 52px 16px 110px;
+        }
+
+        /* Header */
+        .header {
+            text-align: center;
+            margin-bottom: 36px;
+            animation: fadeUp 0.5s ease both;
+        }
+        .header h1 {
+            font-size: 30px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+        }
+        .header p {
+            color: var(--muted);
+            font-size: 14px;
+            line-height: 1.5;
+        }
+
+        /* Section card */
+        .section-card {
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 18px;
+            padding: 14px;
+            margin-bottom: 10px;
+            backdrop-filter: blur(12px);
+            animation: fadeUp 0.5s ease both;
+        }
+        .section-card:nth-child(2) { animation-delay: 0.07s; }
+        .section-card:nth-child(3) { animation-delay: 0.14s; }
+
+        .section-label {
+            display: flex;
+            align-items: center;
+            gap: 7px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            color: var(--muted);
+            margin-bottom: 12px;
+            padding: 0 4px;
+        }
+        .section-label .star { color: #f4c430; }
+
+        /* Input row */
+        .input-row {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.045);
+            border: 1px solid rgba(255,255,255,0.07);
+            border-radius: 13px;
+            padding: 0 14px;
+            height: 56px;
+            margin-bottom: 8px;
+            transition: border-color 0.2s, background 0.2s;
+        }
+        .input-row:last-child { margin-bottom: 0; }
+        .input-row:focus-within {
+            border-color: rgba(0,185,155,0.35);
+            background: rgba(0,185,155,0.04);
+        }
+
+        .net-icon {
+            width: 36px;
+            height: 36px;
+            border-radius: 9px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 15px;
+            flex-shrink: 0;
+            margin-right: 13px;
+        }
+
+        .input-row input {
+            flex: 1;
+            background: none;
+            border: none;
+            outline: none;
+            color: var(--text);
+            font-family: 'Manrope', sans-serif;
+            font-size: 14px;
+            font-weight: 500;
+            min-width: 0;
+        }
+        .input-row input::placeholder { color: var(--muted); }
+
+        /* Collapse */
+        .collapse-toggle {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            cursor: pointer;
+            padding: 4px 4px;
+            border-radius: 9px;
+            user-select: none;
+            transition: background 0.15s;
+        }
+        .collapse-toggle:hover { background: rgba(255,255,255,0.04); }
+
+        .toggle-left {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            font-size: 10px;
+            font-weight: 700;
+            letter-spacing: 1.8px;
+            text-transform: uppercase;
+            color: var(--muted);
+        }
+        .toggle-left i { font-size: 9px; }
+
+        .chevron {
+            color: var(--muted);
+            font-size: 12px;
+            transition: transform 0.28s ease;
+        }
+        .collapse-toggle.open .chevron { transform: rotate(180deg); }
+
+        .collapsible-body {
+            overflow: hidden;
+            max-height: 0;
+            transition: max-height 0.35s ease;
+        }
+        .collapsible-body.open { max-height: 700px; }
+        .collapsible-inner { padding-top: 12px; }
+
+        /* Bottom bar */
+        .bottom-bar {
+            position: fixed;
+            bottom: 0; left: 0; right: 0;
+            padding: 14px 16px 20px;
+            background: linear-gradient(to top, rgba(11,15,26,1) 55%, transparent);
+            z-index: 10;
+        }
+
+        .btn-generate {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 9px;
+            width: 100%;
+            max-width: 520px;
+            margin: 0 auto;
+            height: 56px;
+            border-radius: 14px;
+            border: none;
+            background: linear-gradient(130deg, #3b82f6 0%, #7c3aed 100%);
+            color: white;
+            font-family: 'Manrope', sans-serif;
+            font-size: 15px;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 0 8px 30px rgba(59,130,246,0.28);
+            transition: transform 0.12s, box-shadow 0.2s;
+        }
+        .btn-generate:hover { box-shadow: 0 10px 36px rgba(59,130,246,0.4); }
+        .btn-generate:active { transform: scale(0.98); }
+
+        /* Modal */
+        .modal-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.65);
+            backdrop-filter: blur(6px);
+            z-index: 100;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 16px;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.25s;
+        }
+        .modal-overlay.show { opacity: 1; pointer-events: all; }
+
+        .modal {
+            width: 100%;
+            max-width: 520px;
+            background: #131b2e;
+            border: 1px solid rgba(255,255,255,0.1);
+            border-radius: 22px;
+            padding: 26px;
+            transform: translateY(24px);
+            transition: transform 0.3s ease;
+        }
+        .modal-overlay.show .modal { transform: translateY(0); }
+
+        .modal h3 { font-size: 19px; font-weight: 800; margin-bottom: 6px; }
+        .modal > p { font-size: 13px; color: var(--muted); margin-bottom: 20px; }
+
+        .link-box {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 10px;
+        }
+
+        .link-input {
+            flex: 1;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid var(--border);
+            border-radius: 11px;
+            padding: 12px 13px;
+            color: var(--text);
+            font-family: 'Manrope', sans-serif;
+            font-size: 12px;
+            outline: none;
+            min-width: 0;
+        }
+
+        .btn-copy {
+            padding: 12px 18px;
+            border-radius: 11px;
+            border: none;
+            background: #00c49a;
+            color: #000;
+            font-family: 'Manrope', sans-serif;
+            font-weight: 700;
+            font-size: 13px;
+            cursor: pointer;
+            white-space: nowrap;
+            transition: opacity 0.15s;
+            flex-shrink: 0;
+        }
+        .btn-copy:hover { opacity: 0.85; }
+
+        .btn-preview {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 13px;
+            border-radius: 11px;
+            border: none;
+            background: linear-gradient(130deg, #3b82f6 0%, #7c3aed 100%);
+            color: white;
+            font-family: 'Manrope', sans-serif;
+            font-size: 14px;
+            font-weight: 700;
+            cursor: pointer;
+            margin-bottom: 8px;
+            transition: opacity 0.15s;
+        }
+        .btn-preview:hover { opacity: 0.88; }
+
+        .btn-close-modal {
+            width: 100%;
+            padding: 13px;
+            border-radius: 11px;
+            border: 1px solid var(--border);
+            background: none;
+            color: var(--muted);
+            font-family: 'Manrope', sans-serif;
+            font-size: 14px;
+            cursor: pointer;
+            transition: background 0.15s;
+        }
+        .btn-close-modal:hover { background: rgba(255,255,255,0.05); }
+
+        /* Brand icon colors */
+        .ic-person   { background: rgba(255,255,255,0.1); color: rgba(255,255,255,0.6); }
+        .ic-tg       { background: #2AABEE; color: #fff; }
+        .ic-max      { background: #0077FF; color: #fff; font-weight: 800; font-size: 16px; font-family: 'Manrope',sans-serif; }
+        .ic-vk       { background: #4C75A3; color: #fff; }
+        .ic-ig       { background: linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); color: #fff; }
+        .ic-tt       { background: #010101; color: #fff; border: 1px solid #333; }
+        .ic-yt       { background: #FF0000; color: #fff; }
+        .ic-wa       { background: #25D366; color: #fff; }
+        .ic-vb       { background: #7360F2; color: #fff; }
+        .ic-dc       { background: #5865F2; color: #fff; }
+        .ic-tw       { background: #111; color: #fff; border: 1px solid #333; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+<div class="orb orb-3"></div>
+
+<div class="container">
+    <div class="header">
+        <h1>✨ Создать страницу</h1>
+        <p>Заполните нужные поля и получите ссылку на вашу визитку</p>
+    </div>
+
+    <!-- Profile block -->
+    <div class="section-card">
+        <div class="section-label"><span class="star">★</span> Профиль</div>
+
+        <div class="input-row">
+            <div class="net-icon ic-person"><i class="fas fa-user"></i></div>
+            <input type="text" id="f-name" placeholder="Ваше имя" maxlength="40">
+        </div>
+        <div class="input-row">
+            <div class="net-icon ic-person" style="font-size:13px"><i class="fas fa-align-left"></i></div>
+            <input type="text" id="f-bio" placeholder="Короткое описание (необязательно)" maxlength="80">
+        </div>
+    </div>
+
+    <!-- Основные -->
+    <div class="section-card">
+        <div class="section-label"><span class="star">★</span> Основные</div>
+
+        <div class="input-row">
+            <div class="net-icon ic-tg"><i class="fab fa-telegram"></i></div>
+            <input type="url" id="f-tg" placeholder="Ссылка на Telegram">
+        </div>
+        <div class="input-row">
+            <div class="net-icon ic-max">M</div>
+            <input type="url" id="f-max" placeholder="Ссылка на Max">
+        </div>
+    </div>
+
+    <!-- Дополнительные -->
+    <div class="section-card">
+        <div class="collapse-toggle" id="collapseBtn">
+            <div class="toggle-left"><i class="fas fa-plus"></i> Дополнительные</div>
+            <i class="fas fa-chevron-down chevron"></i>
+        </div>
+
+        <div class="collapsible-body" id="collapseBody">
+            <div class="collapsible-inner">
+                <div class="input-row">
+                    <div class="net-icon ic-vk"><i class="fab fa-vk"></i></div>
+                    <input type="url" id="f-vk" placeholder="Ссылка на ВКонтакте">
+                </div>
+                <div class="input-row">
+                    <div class="net-icon ic-ig"><i class="fab fa-instagram"></i></div>
+                    <input type="url" id="f-ig" placeholder="Ссылка на Instagram">
+                </div>
+                <div class="input-row">
+                    <div class="net-icon ic-tt"><i class="fab fa-tiktok"></i></div>
+                    <input type="url" id="f-tt" placeholder="Ссылка на TikTok">
+                </div>
+                <div class="input-row">
+                    <div class="net-icon ic-yt"><i class="fab fa-youtube"></i></div>
+                    <input type="url" id="f-yt" placeholder="Ссылка на YouTube">
+                </div>
+                <div class="input-row">
+                    <div class="net-icon ic-wa"><i class="fab fa-whatsapp"></i></div>
+                    <input type="url" id="f-wa" placeholder="Ссылка на WhatsApp">
+                </div>
+                <div class="input-row">
+                    <div class="net-icon ic-vb"><i class="fab fa-viber"></i></div>
+                    <input type="url" id="f-vb" placeholder="Ссылка на Viber">
+                </div>
+                <div class="input-row">
+                    <div class="net-icon ic-dc"><i class="fab fa-discord"></i></div>
+                    <input type="url" id="f-dc" placeholder="Ссылка на Discord">
+                </div>
+                <div class="input-row" style="margin-bottom:0">
+                    <div class="net-icon ic-tw"><i class="fab fa-x-twitter"></i></div>
+                    <input type="url" id="f-tw" placeholder="Ссылка на X (Twitter)">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Bottom button -->
+<div class="bottom-bar">
+    <button class="btn-generate" onclick="generate()">
+        <i class="fas fa-wand-magic-sparkles"></i>
+        Сгенерировать ссылку
+    </button>
+</div>
+
+<!-- Modal -->
+<div class="modal-overlay" id="modal" onclick="overlayClick(event)">
+    <div class="modal">
+        <h3>🎉 Визитка готова!</h3>
+        <p>Поделитесь этой ссылкой — гости увидят все ваши соцсети</p>
+        <div class="link-box">
+            <input class="link-input" id="generatedLink" readonly>
+            <button class="btn-copy" id="copyBtn" onclick="copyLink()">Скопировать</button>
+        </div>
+        <button class="btn-preview" onclick="openPreview()">
+            <i class="fas fa-eye"></i> Открыть визитку
+        </button>
+        <button class="btn-close-modal" onclick="closeModal()">Закрыть</button>
+    </div>
+</div>
+
+<script>
+    // Collapse
+    const btn = document.getElementById('collapseBtn');
+    const body = document.getElementById('collapseBody');
+    btn.addEventListener('click', () => {
+        btn.classList.toggle('open');
+        body.classList.toggle('open');
+    });
+
+    // Generate
+    function generate() {
+        const data = {
+            name:      document.getElementById('f-name').value.trim(),
+            bio:       document.getElementById('f-bio').value.trim(),
+            telegram:  document.getElementById('f-tg').value.trim(),
+            max:       document.getElementById('f-max').value.trim(),
+            vk:        document.getElementById('f-vk').value.trim(),
+            instagram: document.getElementById('f-ig').value.trim(),
+            tiktok:    document.getElementById('f-tt').value.trim(),
+            youtube:   document.getElementById('f-yt').value.trim(),
+            whatsapp:  document.getElementById('f-wa').value.trim(),
+            viber:     document.getElementById('f-vb').value.trim(),
+            discord:   document.getElementById('f-dc').value.trim(),
+            twitter:   document.getElementById('f-tw').value.trim(),
+        };
+
+        const hasLink = ['telegram','max','vk','instagram','tiktok','youtube','whatsapp','viber','discord','twitter']
+            .some(k => data[k]);
+        if (!hasLink) {
+            alert('Добавьте хотя бы одну ссылку на соцсеть');
+            return;
+        }
+
+        const encoded = btoa(unescape(encodeURIComponent(JSON.stringify(data))));
+        const base = location.href.replace(/vizitka\.html.*$/, '');
+        const url = base + 'card.html#' + encoded;
+
+        document.getElementById('generatedLink').value = url;
+        document.getElementById('modal').classList.add('show');
+    }
+
+    function copyLink() {
+        const val = document.getElementById('generatedLink').value;
+        navigator.clipboard.writeText(val).then(() => {
+            const b = document.getElementById('copyBtn');
+            b.textContent = 'Скопировано ✓';
+            setTimeout(() => b.textContent = 'Скопировать', 2500);
+        });
+    }
+
+    function openPreview() {
+        window.open(document.getElementById('generatedLink').value, '_blank');
+    }
+
+    function closeModal() {
+        document.getElementById('modal').classList.remove('show');
+    }
+
+    function overlayClick(e) {
+        if (e.target === document.getElementById('modal')) closeModal();
+    }
+</script>
+</body>
+</html>

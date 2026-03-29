@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Визитка</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg: #0b0f1a;
+            --surface: rgba(255,255,255,0.05);
+            --border: rgba(255,255,255,0.08);
+            --text: #e8ecf4;
+            --muted: rgba(232,236,244,0.45);
+        }
+
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            background: var(--bg);
+            color: var(--text);
+            font-family: 'Manrope', sans-serif;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* Orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            pointer-events: none;
+            filter: blur(90px);
+            z-index: 0;
+        }
+        .orb-1 {
+            width: 600px; height: 600px;
+            top: -200px; left: -200px;
+            background: radial-gradient(circle, rgba(0,185,155,0.16) 0%, transparent 65%);
+        }
+        .orb-2 {
+            width: 450px; height: 450px;
+            bottom: -100px; right: -50px;
+            background: radial-gradient(circle, rgba(110,40,210,0.14) 0%, transparent 65%);
+        }
+
+        .container {
+            position: relative;
+            z-index: 1;
+            max-width: 420px;
+            margin: 0 auto;
+            padding: 52px 16px 52px;
+        }
+
+        /* Profile */
+        .profile {
+            text-align: center;
+            margin-bottom: 32px;
+            animation: fadeUp 0.5s ease both;
+        }
+
+        .avatar {
+            width: 84px;
+            height: 84px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, #3b82f6, #7c3aed);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 34px;
+            font-weight: 800;
+            margin: 0 auto 16px;
+            box-shadow: 0 8px 32px rgba(59,130,246,0.3);
+        }
+
+        .profile-name {
+            font-size: 24px;
+            font-weight: 800;
+            letter-spacing: -0.3px;
+            margin-bottom: 6px;
+        }
+
+        .profile-bio {
+            font-size: 14px;
+            color: var(--muted);
+            line-height: 1.5;
+        }
+
+        /* Links */
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            animation: fadeUp 0.5s ease 0.1s both;
+        }
+
+        .link-btn {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 14px 18px;
+            background: var(--surface);
+            border: 1px solid var(--border);
+            border-radius: 14px;
+            color: var(--text);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 15px;
+            transition: background 0.18s, transform 0.12s, border-color 0.18s;
+            backdrop-filter: blur(10px);
+        }
+        .link-btn:hover {
+            background: rgba(255,255,255,0.09);
+            border-color: rgba(255,255,255,0.14);
+            transform: translateY(-1px);
+        }
+        .link-btn:active { transform: scale(0.98); }
+
+        .link-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 11px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 17px;
+            flex-shrink: 0;
+        }
+
+        .link-label { flex: 1; }
+        .link-arrow {
+            color: var(--muted);
+            font-size: 12px;
+        }
+
+        /* Landing (empty state) */
+        .landing {
+            text-align: center;
+            padding: 40px 20px 60px;
+            animation: fadeUp 0.6s ease both;
+        }
+        .landing h1 {
+            font-size: 28px;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 14px;
+        }
+        .landing p {
+            color: var(--muted);
+            font-size: 15px;
+            line-height: 1.7;
+            margin-bottom: 32px;
+        }
+        .btn-create {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            padding: 15px 32px;
+            border-radius: 14px;
+            background: linear-gradient(130deg, #3b82f6, #7c3aed);
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 16px;
+            box-shadow: 0 8px 30px rgba(59,130,246,0.3);
+            transition: transform 0.12s, box-shadow 0.2s;
+        }
+        .btn-create:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 36px rgba(59,130,246,0.4);
+        }
+        .landing-footer { margin-top: 40px; }
+
+        /* AI illustration */
+        .ai-visual {
+            position: relative;
+            width: 180px;
+            height: 180px;
+            margin: 0 auto 36px;
+        }
+        .ai-core {
+            position: absolute;
+            inset: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 36px;
+            color: #a78bfa;
+            animation: pulse-core 3s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(167,139,250,0.8);
+        }
+        .ai-ring {
+            position: absolute;
+            border-radius: 50%;
+            border: 1px solid;
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        .ai-ring-1 {
+            width: 80px; height: 80px;
+            border-color: rgba(167,139,250,0.4);
+            animation: spin 8s linear infinite;
+        }
+        .ai-ring-2 {
+            width: 124px; height: 124px;
+            border-color: rgba(59,130,246,0.25);
+            animation: spin 14s linear infinite reverse;
+        }
+        .ai-ring-3 {
+            width: 170px; height: 170px;
+            border-color: rgba(0,185,155,0.15);
+            animation: spin 20s linear infinite;
+        }
+        .ai-dot {
+            position: absolute;
+            width: 7px; height: 7px;
+            border-radius: 50%;
+            background: #60a5fa;
+            top: 50%; left: 50%;
+            box-shadow: 0 0 8px #60a5fa;
+            transform-origin: 0 0;
+            transform: rotate(var(--a)) translateX(62px) translate(-50%, -50%);
+            animation: pulse-dot 3s ease-in-out infinite;
+            animation-delay: calc(var(--a) / 360deg * -3s);
+        }
+
+        @keyframes spin {
+            to { transform: translate(-50%,-50%) rotate(360deg); }
+        }
+        @keyframes pulse-core {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.15); opacity: 0.8; }
+        }
+        @keyframes pulse-dot {
+            0%, 100% { opacity: 1; transform: rotate(var(--a)) translateX(62px) translate(-50%,-50%) scale(1); }
+            50% { opacity: 0.4; transform: rotate(var(--a)) translateX(62px) translate(-50%,-50%) scale(0.6); }
+        }
+
+        /* Error state */
+        .error {
+            text-align: center;
+            padding: 60px 20px;
+            color: var(--muted);
+        }
+        .error i { font-size: 48px; margin-bottom: 16px; display: block; }
+        .error h2 { font-size: 20px; font-weight: 700; color: var(--text); margin-bottom: 8px; }
+        .error a {
+            display: inline-block;
+            margin-top: 20px;
+            padding: 12px 24px;
+            border-radius: 12px;
+            background: linear-gradient(130deg, #3b82f6, #7c3aed);
+            color: white;
+            text-decoration: none;
+            font-weight: 700;
+        }
+
+        /* Footer */
+        .footer {
+            text-align: center;
+            margin-top: 32px;
+            font-size: 12px;
+            color: var(--muted);
+        }
+        .footer a {
+            color: rgba(0,185,155,0.8);
+            text-decoration: none;
+            font-weight: 600;
+        }
+        .footer a:hover { color: #00c49a; }
+
+        .dev-badge-wrap {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 10px;
+        }
+        .dev-badge-hint {
+            font-size: 12px;
+            color: var(--muted);
+        }
+        .dev-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            padding: 11px 22px;
+            border-radius: 50px;
+            border: 1px solid rgba(52,211,153,0.35);
+            background: rgba(52,211,153,0.08);
+            color: #6ee7b7;
+            text-decoration: none;
+            font-size: 14px;
+            font-weight: 600;
+            box-shadow: 0 0 18px rgba(52,211,153,0.12);
+            transition: background 0.2s, box-shadow 0.2s, transform 0.12s;
+            animation: badge-pulse 2.5s ease-in-out infinite;
+        }
+        .dev-badge:hover {
+            background: rgba(52,211,153,0.16);
+            box-shadow: 0 0 28px rgba(52,211,153,0.25);
+            transform: translateY(-1px);
+        }
+        .dev-badge i { font-size: 16px; }
+        .dev-badge-name { font-weight: 700; color: #a7f3d0; }
+
+        @keyframes badge-pulse {
+            0%, 100% { box-shadow: 0 0 18px rgba(52,211,153,0.12); }
+            50%       { box-shadow: 0 0 28px rgba(52,211,153,0.28); }
+        }
+
+        /* Brand icon colors */
+        .ic-tg  { background: #2AABEE; color: #fff; }
+        .ic-max { background: #0077FF; color: #fff; font-weight: 800; font-size: 17px; font-family: 'Manrope',sans-serif; }
+        .ic-vk  { background: #4C75A3; color: #fff; }
+        .ic-ig  { background: linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); color: #fff; }
+        .ic-tt  { background: #010101; color: #fff; border: 1px solid #333; }
+        .ic-yt  { background: #FF0000; color: #fff; }
+        .ic-wa  { background: #25D366; color: #fff; }
+        .ic-vb  { background: #7360F2; color: #fff; }
+        .ic-dc  { background: #5865F2; color: #fff; }
+        .ic-tw  { background: #111; color: #fff; border: 1px solid #333; }
+
+        @keyframes fadeUp {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+<div class="orb orb-1"></div>
+<div class="orb orb-2"></div>
+
+<div class="container" id="app"></div>
+
+<script>
+    const NETWORKS = [
+        { key: 'telegram',  label: 'Telegram',      cls: 'ic-tg',  icon: '<i class="fab fa-telegram"></i>' },
+        { key: 'max',       label: 'Max',            cls: 'ic-max', icon: 'M' },
+        { key: 'vk',        label: 'ВКонтакте',     cls: 'ic-vk',  icon: '<i class="fab fa-vk"></i>' },
+        { key: 'instagram', label: 'Instagram',      cls: 'ic-ig',  icon: '<i class="fab fa-instagram"></i>' },
+        { key: 'tiktok',    label: 'TikTok',         cls: 'ic-tt',  icon: '<i class="fab fa-tiktok"></i>' },
+        { key: 'youtube',   label: 'YouTube',        cls: 'ic-yt',  icon: '<i class="fab fa-youtube"></i>' },
+        { key: 'whatsapp',  label: 'WhatsApp',       cls: 'ic-wa',  icon: '<i class="fab fa-whatsapp"></i>' },
+        { key: 'viber',     label: 'Viber',          cls: 'ic-vb',  icon: '<i class="fab fa-viber"></i>' },
+        { key: 'discord',   label: 'Discord',        cls: 'ic-dc',  icon: '<i class="fab fa-discord"></i>' },
+        { key: 'twitter',   label: 'X (Twitter)',    cls: 'ic-tw',  icon: '<i class="fab fa-x-twitter"></i>' },
+    ];
+
+    function render() {
+        const app = document.getElementById('app');
+        const hash = location.hash.slice(1);
+
+        if (!hash) {
+            app.innerHTML = `
+                <div class="landing">
+                    <div class="ai-visual">
+                        <div class="ai-ring ai-ring-3"></div>
+                        <div class="ai-ring ai-ring-2"></div>
+                        <div class="ai-ring ai-ring-1"></div>
+                        <div class="ai-core">✦</div>
+                        <div class="ai-dot" style="--a:0deg"></div>
+                        <div class="ai-dot" style="--a:60deg"></div>
+                        <div class="ai-dot" style="--a:120deg"></div>
+                        <div class="ai-dot" style="--a:180deg"></div>
+                        <div class="ai-dot" style="--a:240deg"></div>
+                        <div class="ai-dot" style="--a:300deg"></div>
+                    </div>
+                    <h1>Электронная визитка</h1>
+                    <p>Собери все свои соцсети в одной ссылке.<br>Поделись — и люди сами найдут тебя везде.</p>
+                    <a class="btn-create" href="vizitka.html">✨ Создать визитку</a>
+                    <div class="landing-footer">${devBadge()}</div>
+                </div>`;
+            return;
+        }
+
+        let data;
+        try {
+            data = JSON.parse(decodeURIComponent(escape(atob(hash))));
+        } catch(e) {
+            app.innerHTML = `
+                <div class="error">
+                    <i class="fas fa-triangle-exclamation"></i>
+                    <h2>Не удалось загрузить</h2>
+                    <p>Ссылка повреждена или устарела</p>
+                    <a href="vizitka.html">Создать свою визитку</a>
+                </div>
+                ${devBadge()}`;
+            return;
+        }
+
+        // Title
+        document.title = data.name ? data.name + ' — Визитка' : 'Визитка';
+
+        // Avatar letter
+        const letter = data.name ? data.name.trim()[0].toUpperCase() : '?';
+
+        // Build links HTML
+        const links = NETWORKS
+            .filter(n => data[n.key])
+            .map(n => `
+                <a class="link-btn" href="${escHtml(data[n.key])}" target="_blank" rel="noopener noreferrer">
+                    <div class="link-icon ${n.cls}">${n.icon}</div>
+                    <span class="link-label">${n.label}</span>
+                    <i class="fas fa-arrow-right link-arrow"></i>
+                </a>`)
+            .join('');
+
+        app.innerHTML = `
+            <div class="profile">
+                <div class="avatar">${letter}</div>
+                ${data.name ? `<div class="profile-name">${escHtml(data.name)}</div>` : ''}
+                ${data.bio  ? `<div class="profile-bio">${escHtml(data.bio)}</div>`   : ''}
+            </div>
+            <div class="links">${links}</div>
+            <div class="footer">
+                Сделать <a href="vizitka.html">свою визитку →</a><br>
+                ${devBadge()}
+            </div>`;
+    }
+
+    function devBadge() {
+        return `<div class="dev-badge-wrap">
+            <div class="dev-badge-hint">Познакомиться с разработчиком</div>
+            <a class="dev-badge" href="https://storage.yandexcloud.net/samarina-vizitka/samarina.html" target="_blank" rel="noopener noreferrer">
+                <i class="fas fa-user-circle"></i>
+                <span class="dev-badge-name">Самарина Юлия</span>
+            </a>
+        </div>`;
+    }
+
+    function escHtml(s) {
+        return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+    }
+
+    render();
+</script>
+</body>
+</html>
